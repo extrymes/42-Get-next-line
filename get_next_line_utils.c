@@ -6,11 +6,52 @@
 /*   By: sabras <sabras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 15:22:59 by sabras            #+#    #+#             */
-/*   Updated: 2024/05/21 17:58:46 by sabras           ###   ########.fr       */
+/*   Updated: 2024/05/21 21:58:32 by sabras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+
+int	ft_find_new_line(char *tab, int bytes_read)
+{
+	int		i;
+
+	if (!tab)
+		return (-1);
+	i = 0;
+	while (tab[i] && tab[i] != '\n')
+		i++;
+	if (tab[i] == '\n')
+		return (i + 1);
+	if (bytes_read == 0 || bytes_read < BUFFER_SIZE)
+	{
+		i = 0;
+		while (tab[i])
+			i++;
+		return (i);
+	}
+	return (-1);
+}
+
+char	*ft_create_line(char **tab, int len)
+{
+	char	*line;
+	int		i;
+
+	line = malloc((len + 1) * sizeof(char));
+	if (!line)
+		return (NULL);
+	i = -1;
+	while (++i < len)
+		line[i] = (*tab)[i];
+	line[i] = '\0';
+	i = 0;
+	while ((*tab)[i])
+		i++;
+	if (!ft_tab_realloc(tab, i - len + 1, len))
+		return (free(line), NULL);
+	return (line);
+}
 
 int	ft_tab_add(char **tab, char *buffer, int bytes_read)
 {
@@ -58,47 +99,6 @@ int	ft_tab_realloc(char **tab, int size, int start)
 	}
 	(*tab)[i] = '\0';
 	return (free(tmp), 1);
-}
-
-int	ft_find_new_line(char *tab, int bytes_read)
-{
-	int		i;
-
-	if (!tab)
-		return (-1);
-	i = 0;
-	while (tab[i] && tab[i] != '\n')
-		i++;
-	if (tab[i] == '\n')
-		return (i + 1);
-	if (bytes_read == 0 || bytes_read < BUFFER_SIZE)
-	{
-		i = 0;
-		while (tab[i])
-			i++;
-		return (i);
-	}
-	return (-1);
-}
-
-char	*ft_create_line(char **tab, int len)
-{
-	char	*line;
-	int		i;
-
-	line = malloc((len + 1) * sizeof(char));
-	if (!line)
-		return (NULL);
-	i = -1;
-	while (++i < len)
-		line[i] = (*tab)[i];
-	line[i] = '\0';
-	i = 0;
-	while ((*tab)[i])
-		i++;
-	if (!ft_tab_realloc(tab, i - len + 1, len))
-		return (free(line), NULL);
-	return (line);
 }
 
 void	*ft_tab_free(char *tab)

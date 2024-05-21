@@ -6,7 +6,7 @@
 /*   By: sabras <sabras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 10:55:47 by sabras            #+#    #+#             */
-/*   Updated: 2024/05/21 13:42:43 by sabras           ###   ########.fr       */
+/*   Updated: 2024/05/21 22:11:01 by sabras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,10 @@
 # include <stdlib.h>
 
 char	*get_next_line(int fd);
+int		ft_find_new_line(char *tab, int bytes_read);
+char	*ft_create_line(char **tab, int len);
 int		ft_tab_add(char **tab, char *buffer, int bytes_read);
 int		ft_tab_realloc(char **tab, int size, int start);
 void	*ft_tab_free(char *tab);
-int		ft_find_new_line(char *tab, int bytes_read);
-char	*ft_create_line(char **tab, int len);
 
 #endif

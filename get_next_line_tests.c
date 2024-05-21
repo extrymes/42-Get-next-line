@@ -6,7 +6,7 @@
 /*   By: sabras <sabras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 11:27:21 by sabras            #+#    #+#             */
-/*   Updated: 2024/05/21 15:13:04 by sabras           ###   ########.fr       */
+/*   Updated: 2024/05/21 22:02:42 by sabras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,16 +26,13 @@ int	main(int ac, char **av)
 	if (fd == -1)
 		return (1);
 	printf("BUFFER_SIZE: %d\n", BUFFER_SIZE);
-	line = get_next_line(fd);
-	printf("Line 1: %s", line);
-	free(line);
+	line = "";
 	i = 1;
 	while (line)
 	{
 		line = get_next_line(fd);
-		printf("Line %d: %s", i + 1, line);
+		printf("Line %d: %s", i++, line);
 		free(line);
-		i++;
 	}
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: sabras <sabras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 11:27:21 by sabras            #+#    #+#             */
-/*   Updated: 2024/05/21 22:02:42 by sabras           ###   ########.fr       */
+/*   Updated: 2024/05/23 10:10:11 by sabras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,13 @@
 #include <stdio.h>
 #include <fcntl.h>
 
-int	main(int ac, char **av)
+int	main(void)
 {
 	char		*line;
 	int			fd;
 	int			i;
 
-	if (ac != 2)
-		return (1);
-	fd = open(av[1], O_RDONLY);
+	fd = open("get_next_line_tests.txt", O_RDONLY);
 	if (fd == -1)
 		return (1);
 	printf("BUFFER_SIZE: %d\n", BUFFER_SIZE);

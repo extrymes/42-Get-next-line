@@ -6,7 +6,7 @@
 /*   By: sabras <sabras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 15:22:59 by sabras            #+#    #+#             */
-/*   Updated: 2024/05/21 21:58:32 by sabras           ###   ########.fr       */
+/*   Updated: 2024/05/24 10:49:38 by sabras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ int	ft_find_new_line(char *tab, int bytes_read)
 {
 	int		i;
 
+	if (!tab && bytes_read == 0)
+		return (0);
 	if (!tab)
 		return (-1);
 	i = 0;
@@ -40,7 +42,7 @@ char	*ft_create_line(char **tab, int len)
 
 	line = malloc((len + 1) * sizeof(char));
 	if (!line)
-		return (NULL);
+		return (ft_tab_free(tab), NULL);
 	i = -1;
 	while (++i < len)
 		line[i] = (*tab)[i];
@@ -61,10 +63,10 @@ int	ft_tab_add(char **tab, char *buffer, int bytes_read)
 	i = 0;
 	while (*tab && (*tab)[i])
 		i++;
-	if (bytes_read < 1)
+	if (bytes_read == 0)
 		return (free(buffer), 1);
 	if (!ft_tab_realloc(tab, i + bytes_read + 1, 0))
-		return (free(buffer), 1);
+		return (0);
 	j = 0;
 	while (j < bytes_read)
 		(*tab)[i++] = buffer[j++];
@@ -87,7 +89,7 @@ int	ft_tab_realloc(char **tab, int size, int start)
 		i++;
 	}
 	tmp[i] = '\0';
-	ft_tab_free(*tab);
+	ft_tab_free(tab);
 	*tab = malloc(size * sizeof(char));
 	if (!*tab)
 		return (free(tmp), 0);
@@ -101,9 +103,9 @@ int	ft_tab_realloc(char **tab, int size, int start)
 	return (free(tmp), 1);
 }
 
-void	*ft_tab_free(char *tab)
+void	ft_tab_free(char **tab)
 {
-	if (tab)
-		free(tab);
-	return (NULL);
+	if (*tab)
+		free(*tab);
+	*tab = NULL;
 }

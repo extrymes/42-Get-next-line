@@ -6,7 +6,7 @@
 /*   By: sabras <sabras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 10:55:47 by sabras            #+#    #+#             */
-/*   Updated: 2024/05/24 10:44:53 by sabras           ###   ########.fr       */
+/*   Updated: 2024/05/27 21:08:53 by sabras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,9 @@
 # define GET_NEXT_LINE_H
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 42
+# endif
+# ifndef MEM_SIZE
+#  define MEM_SIZE 21
 # endif
 # include <unistd.h>
 # include <stdlib.h>

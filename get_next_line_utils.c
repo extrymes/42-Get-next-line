@@ -6,7 +6,7 @@
 /*   By: sabras <sabras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 15:22:59 by sabras            #+#    #+#             */
-/*   Updated: 2024/05/24 10:49:38 by sabras           ###   ########.fr       */
+/*   Updated: 2024/05/27 21:20:09 by sabras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,9 @@ char	*ft_create_line(char **tab, int len)
 	i = 0;
 	while ((*tab)[i])
 		i++;
-	if (!ft_tab_realloc(tab, i - len + 1, len))
+	if (i == len)
+		ft_tab_free(tab);
+	if (!ft_tab_realloc(tab, (((i - len + 1) / MEM_SIZE) + 1) * MEM_SIZE, len))
 		return (free(line), NULL);
 	return (line);
 }
@@ -59,14 +61,19 @@ int	ft_tab_add(char **tab, char *buffer, int bytes_read)
 {
 	int		i;
 	int		j;
+	int		size;
 
+	if (bytes_read == 0)
+		return (free(buffer), 1);
 	i = 0;
 	while (*tab && (*tab)[i])
 		i++;
-	if (bytes_read == 0)
-		return (free(buffer), 1);
-	if (!ft_tab_realloc(tab, i + bytes_read + 1, 0))
-		return (0);
+	size = (i + bytes_read + 1) / MEM_SIZE;
+	if (!*tab || (i + 1) / MEM_SIZE < size)
+	{
+		if (!ft_tab_realloc(tab, (size + 1) * MEM_SIZE, 0))
+			return (0);
+	}
 	j = 0;
 	while (j < bytes_read)
 		(*tab)[i++] = buffer[j++];
